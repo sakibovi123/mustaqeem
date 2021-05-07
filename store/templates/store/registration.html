@@ -1,0 +1,18 @@
+{% extends 'store/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+</br>
+    <div class="container mx-auto col-lg-4">
+    <form method="POST" class="form-control col-lg-3">
+        {% csrf_token %}
+        {{form|crispy}}
+
+        </br>
+        <input type="submit" value="Sign up" class="btn btn-success col-lg-12">
+        </br>
+        <p>Already have and account?<a href="{% url 'store:user_login' %}">Sign in</a></p>
+        </br>
+    </form>
+    </div>
+{% endblock %}

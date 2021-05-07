@@ -1,0 +1,173 @@
+body {
+    padding: auto;
+    margin: auto;
+    background-color: #e8e8e8;
+    font-family: "Open Sans", sans-serif;
+}
+
+.heading {
+    background-color: #ffffff;
+    height: 100px;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.heading ul {
+    list-style-type: none;
+    text-align: center;
+    display: absolute;
+}
+
+.heading ul li {
+    display: inline-block;
+    /*padding: 20px;*/
+    margin-right: 50px;
+}
+
+.head {
+    height: 40px;
+    width: 100px;
+    color: #c2c2c2;
+    margin-bottom: 68px;
+}
+
+.line {
+    height: 81px;
+    width: 1px;
+    background-color: #ddd;
+}
+
+
+/* Cart Design Css */
+
+.grid-property {
+    display: flex;
+    grid-column-gap: 50px;
+}
+
+.cart-main {
+    margin-left: 80px;
+    height: 400px;
+    width: 1250px;
+    background: #fff;
+    border: none;
+}
+
+.cart-main table {
+    padding: 29px;
+}
+
+.cart-main table th {
+    text-align: center;
+    width: 250px;
+    font-size: 14px;
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+}
+
+.cart-main table tr {
+    height: 60px;
+}
+
+td {
+    text-align: center;
+    font-size: 16px;
+    height: 30px;
+    border-bottom: 1px solid #ededed;
+}
+
+.confirm-button {
+    background: #d67411;
+    padding: 13px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: 1.3px;
+    font-size: 13px;
+    float: right;
+    margin-right: 39px;
+}
+
+.confirm-button:hover {
+    color: #ddd;
+    font-size: 13px;
+    letter-spacing: 1.3px;
+    font-weight: 600;
+}
+
+.arrow {
+    margin-top: 16px;
+    height: 13px;
+    width: 30px;
+    color: #111;
+}
+
+
+/*Delete Button */
+
+.delete {
+    height: 20px;
+    width: 38px;
+    color: grey;
+}
+
+.delete:hover {
+    color: #d67411;
+}
+
+.summary {
+    height: 500px;
+    width: 500px;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+.summary th {
+    padding: 2.5rem;
+}
+
+.table-summary {
+    width: 100%;
+}
+
+.count {
+    background: green;
+    padding: 6px;
+    border-radius: 12px;
+    color: #fff;
+    font-size: 11px;
+}
+
+.plusButton {
+    border: 1px solid #ddd;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.minusButton {
+    border: 1px solid #ddd;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.minusButton:hover {
+    background-color: #111;
+    color: #fff;
+}
+
+.plusButton:hover {
+    background-color: #111;
+    color: #fff;
+}
+
+.quantityPlusMinus {
+    border: 1px solid #ddd;
+}
+
+.btn-pagol {
+    background-color: #d67411;
+    color: #fff;
+    font-weight: w700;
+}

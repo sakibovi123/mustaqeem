@@ -3,22 +3,51 @@
 
 
 {% block content %}
-</br>
-</br>
-    <div class="container col-lg-3">
-    <form class="form-control" action="" method="POST">
-        {% csrf_token %}
-        <label>Username</label></br>
-        <input type="text" class="form-control" name="username"></br>
-        <label>Password</label></br>
-        <input type="password" class="form-control" name="password">
-        </br>
-        <button type="submit" class="btn btn-success col-lg-12">Login</button>
-        </br>
-        <p>Don't have an account?<a href="{% url 'store:user_registration' %}">sign up now</a></p>
 
-    </form>
+
+<style type="text/css">
+    @media screen and (max-width: 480px){
+    .img-container{
+        width: 340px;
+        padding: 5px;
+    }
+}
+
+.login-form{
+    border-radius: 0px !important;
+    border: none;
+}
+
+img-container{
+    object-fit: content;
+}
+
+
+</style>
+
+    <div class="container mt-5 bg-white">
+        <div class="row g-0">
+            <div class="col">
+                <img src="{% static 'background_images/signup.jpg' %}" alt="" height=464px width=700pxclass="img-container">
+            </div>
+            <div class="col">
+                <div class="container">
+                    <form class="form-control p-5 login-form" action="" method="POST">
+                        <h4 class="mt-3 p-2" style="text-align: center;">Login Now</h4>
+                        <label>Username</label></br>
+                        <input type="text" class="form-control" name="username" placeholder="Enter Username"></br>
+                        <label class="m-1">Password</label></br>
+                        <input type="password" class="form-control" name="password" placeholder="Enter Password">
+                        </br>
+                        <button type="submit" class="btn btn-success col-lg-12 mt-4">Login</button>
+                        </br>
+                        <p class="mt-3">Don't have an account?<a href="{% url 'store:user_registration' %}" style="color:red;">sign up now</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 
 

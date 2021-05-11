@@ -60,7 +60,7 @@
         <div class="all__categories">
             {% for category in categories %}
                 <div>
-                    <a href="#">
+                    <a href="{% url 'store:categorywise-product' category.id category.title %}">
                         <!-- Categories outside border card starts -->
                         <div class="cat__card">
                             <!-- Categories image card starts -->
@@ -158,7 +158,7 @@
         {% if campaigns %}
         <div class="campaign__offer">
             <div class="offers__thumbnail">
-                <a href="#">
+                <a href="{% url 'store:campaigns' %}">
                     <img src="{{ campaigns.img.url }}" alt="">
                 </a>
             </div>
@@ -167,7 +167,7 @@
         {% if offers %}
         <div class="offer">
             <div class="offers__thumbnail">
-                <a href="#">
+                <a href="{% url 'store:flash-sale' %}">
                     <img src="{{ offers.offer_img.url }}" alt="">
                 </a>
             </div>
@@ -232,9 +232,11 @@
     {% if brands %}
     <div class="brands my-5">
         {% for brand in brands %}
-        <div class="brand__img">
-            <img src="{{ brand.img.url }}" alt="">
-        </div>
+        <a href="{% url 'store:brandwise-product' brand.id brand.title %}">
+            <div class="brand__img">
+                <img src="{{ brand.img.url }}" alt="">
+            </div>
+        </a>
         {% endfor %}
     </div>
     {% endif %}

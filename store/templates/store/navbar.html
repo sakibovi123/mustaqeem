@@ -15,6 +15,8 @@
 
 <!-- Custom js -->
 <script src={% static 'js/navbar.js' %} defer></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.12"></script>
+<script type="text/javascript" src="https://unpkg.com/vuex@3.6.2/dist/vuex.js"></script>
 
 <!-- Navbar for tab, and mobile starts -->
 <div class="tab__navbar">
@@ -62,7 +64,7 @@
                 </li>
                 <li>
                     <a href="#">
-                        <span class="iconify icon" data-icon="bx:bx-cart" data-inline="false"></span> Cart <small class="cart__counter">0</small>
+                        <span class="iconify icon" data-icon="bx:bx-cart" data-inline="false"></span> Cart <small class="cart__counter">([[numItems]])</small>
                     </a>
                 </li>
                 <li>
@@ -88,7 +90,7 @@
                 {% for category in categories %}
                 <li>
                     <div class="cat__list">
-                        <a href="#">
+                        <a href="{% url 'store:categorywise-product' category.id category.title %}">
                             <img src="{{ category.img.url }}" alt=""> <span>{{ category.title }}</span>
                         </a>
                     </div>
@@ -184,7 +186,9 @@
             </li>
             <li class="nav-item cart__header me-2">
                 <a href="{% url 'cart_details' %}">
-                    <span class="iconify" data-icon="bx:bx-cart" data-inline="false"></span><span class="cart__counter">0</span>
+                    <div id="navbarApp">
+                        <span class="iconify" data-icon="bx:bx-cart" data-inline="false"></span><span class="cart__counter">[[ numItems ]]</span>
+                    </div>
                 </a>
             </li>
             <li class="nav-item top__header">
@@ -210,7 +214,7 @@
                     {% if main_navbarCat %}
                         {% for category in main_navbarCat %}
                             <li class="nav-item cat__list">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="{% url 'store:categorywise-product' category.id category.title %}">
                                     {{ category.title }}
                                 </a>
 
@@ -221,7 +225,7 @@
                                                 {% for subcategory in subcategories %}
                                                     {% if subcategory.parent_category.title == category.title %}
                                                         <li class="sub__list">
-                                                            <a href="#">
+                                                            <a href="{% url 'store:subcategorywise-product' subcategory.id subcategory.title %}">
                                                                 <small>{{ subcategory.title }}</small>
                                                             </a>
                                                         </li>
@@ -256,13 +260,13 @@
                     <div class="all__departmentsContent">
                         {% for category in categories %}
                             <ul class="category__list">
-                                <a href="#" class="text-dark">
+                                <a href="{% url 'store:categorywise-product' category.id category.title %}" class="text-dark">
                                     <h6 class="fw-bold">{{ category.title }}</h6>
                                 </a>
                                 {% for subcategory in subcategories %}
                                     {% if subcategory.parent_category.title == category.title %}
                                         <li class="subcategory__list">
-                                            <a href="#">
+                                            <a href="{% url 'store:subcategorywise-product' subcategory.id subcategory.title %}">
                                                 <small>{{ subcategory.title }}</small>
                                             </a>
                                         </li>
@@ -332,3 +336,31 @@
 </nav>
 <!-- Header after slider starts -->
 
+<script>
+
+    var store = new Vuex.Store({
+        state: {
+            numItems: {{ cart.get_total_length }}
+        },
+
+        mutations: {
+            increament(state, quantity) {
+                state.numItems += quantity;
+            }
+        }
+
+    });
+
+    var navbarApp = new Vue({
+        el: '#navbarApp',
+        delimiters: ["[[", "]]"],
+        store: store,
+        computed: {
+            numItems: function() {
+                return store.state.numItems
+            }
+        }
+
+    });
+
+</script>

@@ -143,7 +143,7 @@
     var productApp = new Vue({
     el: '#productsApp',
     delimiters: ['[[', ']]'],
-
+    store: store,
     data() {
         return {
 
@@ -158,11 +158,13 @@
             alert("Product Added To Cart");
         },
 
+
+
         addToCart(product_id) {
             console.log("product_id:", product_id);
 
             var data = { 'product_id': product_id, 'update': false, 'quantity': 1 };
-
+            store.commit('increament', 1);
             fetch('/api/api_add_to_cart/', {
                     method: 'POST',
                     headers: {

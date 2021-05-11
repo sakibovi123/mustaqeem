@@ -17,7 +17,7 @@
     {% if brands %}
     <div class="all__brands">
         {% for brand in brands %}
-        <a href="{% url 'store:brand_wise_product' brand.id %}">
+        <a href="{% url 'store:brandwise-product' brand.id brand.title %}">
             <div class="card brand__card p-3">
                 <div class="brand__img">
                     <img src="{{ brand.img.url }}" alt="">

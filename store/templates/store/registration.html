@@ -1,18 +1,50 @@
 {% extends 'store/base.html' %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block content %}
-</br>
-    <div class="container mx-auto col-lg-4">
-    <form method="POST" class="form-control col-lg-3">
-        {% csrf_token %}
-        {{form|crispy}}
+<style type="text/css">
+    @media screen and (max-width: 480px){
+        .img-container{
+            width: 340px;
+            padding: 5px;
+        }
+    }
 
-        </br>
-        <input type="submit" value="Sign up" class="btn btn-success col-lg-12">
-        </br>
-        <p>Already have and account?<a href="{% url 'store:user_login' %}">Sign in</a></p>
-        </br>
-    </form>
+    .reg-form{
+        border-radius: 0px;
+        border: none;
+    }
+
+    img-container{
+        width: 700px;
+        object-fit: cover;
+    }
+
+    @media screen and (max-width: 768px){
+    .img-container{
+        height: 450px;
+    }
+}
+
+
+</style>
+
+    <div class="container mt-5 bg-white">
+        <div class="row g-0">
+            <div class="col">
+                <img src="{% static 'background_images/signin.jpg' %}" alt="" class="img-container">
+            </div>
+            <div class="col">
+                <form method="POST" class="form-control h-100 p-5 reg-form">
+                    <h4 style="text-align:center;" class="mt-2">SIGN UP</h4>
+                    <hr>
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    <input type="submit" value="Sign up" class="btn btn-success col-lg-12 mt-4">
+                    <p class="mt-3" style="text-align: center;">Already have and account?<a href="{% url 'store:user_login' %}">Sign in</a></p>
+                </form>
+            </div>
+        </div>
     </div>
+
 {% endblock %}

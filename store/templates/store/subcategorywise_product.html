@@ -6,16 +6,13 @@
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'css/shopwise_product.css' %}">
+<link rel="stylesheet" href="{% static 'css/categorywise_product.css' %}">
 
 <div class="container mt-5">
     <!-- Shop header starts -->
     <div class="shop__info">
-        <div class="shop__img">
-            <img src="{{ shop.img.url }}" alt="">
-        </div>
         <div class="shop__title">
-            <h5 class="fw-bold">{{ shop.title }} <span class="iconify" data-icon="teenyicons:tick-outline" data-inline="false"></span></h5>
+            <h5 class="fw-bold">{{ subcategory.title }} <span class="iconify" data-icon="teenyicons:tick-outline" data-inline="false"></span></h5>
         </div>
     </div>
     <!-- Shop header ends -->
@@ -26,9 +23,30 @@
         <!-- Shop sidebar starts -->
         <div class="shop__sidebar">
             <div class="card shop__card p-3">
-                <h5>{{ shop.title }}</h5>
-                <p class="shop__phone text-muted"><span class="iconify" data-icon="bx:bx-phone" data-inline="false"></span> {% if shop.phone_no %}{{ shop.phone_no }}{% endif %}</p>
-                <p class="text-muted"><span class="iconify" data-icon="bi:map" data-inline="false"></span> {% if shop.address %}{{ shop.address }}{% endif %}</p>
+                <h5 class="text-center">Categories</h5>
+                <hr />
+                {% if categories %}
+                    <!-- Category list starts -->
+                    {% for category in categories %}
+                        <div class="category__list">
+                            <a href="{% url 'store:categorywise-product' category.id category.title %}">
+                                <h6 class="fw-bold cat__title text-dark">{{ category.title }}</h6>
+                            </a>
+                            <!-- Subcategory list starts -->
+                            {% for subcategory in subcategories %}
+                                {% if subcategory.parent_category.title == category.title %}
+                                    <a href="{% url 'store:subcategorywise-product' subcategory.id subcategory.title %}" class="subcategory__list">
+                                        <div>
+                                            <small class="text-muted ps-3">{{ subcategory.title }}</small>
+                                        </div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                            <!-- Subcategory list ends -->
+                        </div>
+                    {% endfor %}
+                    <!-- Category list ends -->
+                {% endif %}
             </div>
 
             <!-- Price filter starts -->
@@ -55,7 +73,7 @@
         {% if products %}
         <div class="shop__content">
             <div class="shop__contentHeader mb-3">
-                <h5>New Arrival Products</h5>
+                <h5 class="text-center">{{ subcategory.title }}</h5>
                 <hr class="mb-4" />
             </div>
             <div class="shop__productContainer">
@@ -101,12 +119,6 @@
                 </div>
                 {% endfor %}
             </div>
-            <!-- Price filter starts -->
-            <div class="card p-3 mt-3 mb-5">
-                <label for="price__filter" class="form-label">Price Range</label>
-                <input type="range" min="0" max="100" value="0" class="form-range slider" id="price__filter">
-            </div>
-            <!-- Price filter ends -->
         </div>
         <!-- Products related to shop ends -->
         {% else %}

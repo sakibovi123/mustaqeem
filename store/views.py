@@ -108,15 +108,6 @@ def productDetailView(request, slug):
     }
     return render(request, "store/product_details.html", context)
 
-def category_wise_product(request, id):
-    cat_obj = Category.objects.all().order_by("-id")
-
-    prd_obj = Product.objects.filter(category_id = id)
-
-    context = {'cat_obj': cat_obj, 'prd_obj': prd_obj}
-
-    return render(request, 'store/category_wise.html', context)
-
 
 def allBrandsView(request):
     categories = Category.objects.all().order_by("-id")
@@ -180,18 +171,6 @@ def wishlistView(request):
     }
     return render(request, "store/wishlist.html", context)
 
-
-
-
-
-def brand_wise_product(request, id):
-    categories = Category.objects.all().order_by("-id")
-    brand_obj = Brand.objects.all()
-    prd_obj = Product.objects.filter(brand_id=id)
-
-    context = {'brand_obj': brand_obj, 'prd_obj': prd_obj, "categories": categories}
-
-    return render(request, 'store/brand_wise.html', context)
 
 
 def campaignView(request):
@@ -325,3 +304,105 @@ def searchView(request):
             "subcategories": subcategories,
         }
         return render(request, 'store/search.html', context)
+
+
+def categorywiseProductView(request, id, title):
+    products = []
+    main_navbarCat = Category.objects.all().order_by("-id")[:6]
+    subcategories = SubCategory.objects.all()
+    categories = Category.objects.all().order_by("-id")
+
+    try:
+        category = Category.objects.get(id=id, title=title)
+    except Category.DoesNotExist:
+        return HttpResponse("Category not found!")
+    else:
+        products_obj = Product.objects.all().order_by("-id")
+        # Appending all the products of that particular category
+        for item in products_obj:
+            if str(item.category) == category.title:
+                products.append(item)
+
+        # Pagination
+        paginator = Paginator(products, 20)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+    context = {
+        "main_navbarCat": main_navbarCat,
+        "subcategories": subcategories,
+        "categories": categories,
+        "category": category,
+        "products": products,
+        "page_obj": page_obj
+    }
+    return render(request, "store/categorwise_product.html", context)
+
+
+def subcategorywiseProduct(request, id, title):
+    products = []
+    main_navbarCat = Category.objects.all().order_by("-id")[:6]
+    subcategories = SubCategory.objects.all()
+    categories = Category.objects.all().order_by("-id")
+
+    try:
+        subcategory = SubCategory.objects.get(id=id, title=title)
+    except SubCategory.DoesNotExist:
+        return HttpResponse("Subcategory not found!")
+    else:
+        products_obj = Product.objects.all().order_by("-id")
+        # Appending all the products of that particular subcategory
+        for item in products_obj:
+            if subcategory.parent_category.title == str(item.category):
+                products.append(item)
+
+        # Pagination
+        paginator = Paginator(products, 20)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+    context = {
+        "main_navbarCat": main_navbarCat,
+        "subcategories": subcategories,
+        "subcategory": subcategory,
+        "categories": categories,
+        "products": products,
+        "page_obj": page_obj
+    }
+    return render(request, "store/subcategorywise_product.html", context)
+
+
+def brandwiseProductView(request, id, title):
+    products = []
+    main_navbarCat = Category.objects.all().order_by("-id")[:6]
+    subcategories = SubCategory.objects.all()
+    categories = Category.objects.all().order_by("-id")
+
+    try:
+        brand = Brand.objects.get(id=id, title=title)
+    except Brand.DoesNotExist:
+        return HttpResponse("Brand not found!")
+    else:
+        products_obj = Product.objects.all().order_by("-id")
+        # Appending all the products of that particular category
+        for item in products_obj:
+            if str(item.brand) == brand.title:
+                products.append(item)
+
+        # Pagination
+        paginator = Paginator(products, 20)
+
+        page_number = request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+
+    context = {
+        "main_navbarCat": main_navbarCat,
+        "subcategories": subcategories,
+        "categories": categories,
+        "brand": brand,
+        "products": products,
+        "page_obj": page_obj
+    }
+    return render(request, "store/brandwise_product.html", context)

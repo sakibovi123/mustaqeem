@@ -1,8 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
-
-# Create your models here.
+from io import BytesIO
+from django.core.files import File
 
 
 class Banner(models.Model):
@@ -77,6 +77,7 @@ class Product(models.Model):
     title = models.CharField(max_length=120)
     slug = models.SlugField(max_length=200, null=True, unique=True)
     img = models.ImageField(upload_to="images/")
+    thumbnail = models.ImageField(upload_to="images/", null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     brand = models.ForeignKey(
         Brand, on_delete=models.CASCADE, null=True, blank=True)
@@ -96,16 +97,48 @@ class Product(models.Model):
     def __str__(self):
         return self.slug
 
-    def save(self):
-        super().save()
+    # def save(self):
+    #     super().save()
 
-        image = Image.open(self.img)
-        (width, height) = image.size
-        size = (800, 600)
-        image = image.resize(size, Image.ANTIALIAS)
-        image.save(self.img.path)
+    #     image = Image.open(self.img)
+    #     (width, height) = image.size
+    #     size = (800, 600)
+    #     image = image.resize(size, Image.ANTIALIAS)
+    #     image.save(self.img.path)
+
+    """def save(self, *args, **kwargs):
+        self.thumbnail = self.make_thumbnail(self.image)
+
+        super().save(*args, **kwargs)"""
+
+    def get_absolute_url(self):
+        return '%s/%s/' % (self.category.id, self.id)
 
 
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return self.thumbnail.url
+        else:
+            if self.img:
+                self.thumbnail = self.make_thumbnail(self.img)
+                self.save()
+
+                return self.thumbnail.url
+            else:
+                return ''
+
+
+    def make_thumbnail(self, img, size=(300, 200)):
+        imag = Image.open(img)
+        imag.convert('RGB')
+        imag.thumbnail(size)
+
+        thumb_io = BytesIO()
+        imag.save(thumb_io, 'JPEG', quality=85)
+
+        thumbnail = File(thumb_io, name=img.name)
+
+        return thumbnail
 
 
 

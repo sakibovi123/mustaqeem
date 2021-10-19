@@ -5,6 +5,20 @@ from io import BytesIO
 from django.core.files import File
 
 
+class Seller(models.Model):
+    slug = models.SlugField()
+    seller_name = models.CharField(max_length=120)
+    seller_nid = models.CharField(max_length=120)
+    seller_email = models.CharField(max_length=120, null=True, blank=True, unique=True)
+    commision = models.IntegerField()
+    seller_phone = models.CharField(max_length=120)
+    seller_img = models.ImageField(upload_to="images/")
+
+    def __str__(self):
+        return self.seller_name
+
+
+
 class Banner(models.Model):
     image = models.ImageField(upload_to="images/", null=True)
 

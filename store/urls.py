@@ -4,7 +4,7 @@ from .views import (homeView, productDetailView, allBrandsView, userDashboardVie
                     manageProfileView, wishlistView, campaignView, flashSaleView,
                     shopwiseProductView, localShopView, searchView,
                     user_registration, user_login, logoutView,
-                    categorywiseProductView, subcategorywiseProduct, brandwiseProductView)
+                    categorywiseProductView, subcategorywiseProduct, brandwiseProductView, get_seller_registration)
 
 
 app_name = "store"
@@ -29,4 +29,8 @@ urlpatterns = [
     path("user_registration/", user_registration, name="user_registration"),
     path("user_login/", user_login, name="user_login"),
     path('logout/', logoutView, name='logout'),
+
+    ## Seller Registration ##
+
+    path('seller_registration/', get_seller_registration, name="get_seller_registration"),
 ]

@@ -4,7 +4,7 @@ from .models import (Category, Banner, SubCategory, Product, Shop, Campaign, Off
                     WishList, )
 # Pagination module
 from django.core.paginator import Paginator
-from .forms import UserRegistrationForm
+from .forms import UserRegistrationForm, SellerRegistrationForm
 from django.contrib.auth import login, logout, authenticate
 
 # Create your views here.
@@ -406,3 +406,20 @@ def brandwiseProductView(request, id, title):
         "page_obj": page_obj
     }
     return render(request, "store/brandwise_product.html", context)
+
+
+# Seller Registration
+
+
+def get_seller_registration(request):
+    form = SellerRegistrationForm()
+    if request.method == 'POST':
+        form = SellerRegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('store:user_login')
+    context = {'form': form}
+    return render(request, 'store/registration.html', context)
+
+
+

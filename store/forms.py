@@ -11,3 +11,9 @@ class UserRegistrationForm(ModelForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'password']
+
+
+class SellerRegistrationForm(ModelForm):
+    class Meta:
+        model = Seller
+        fields = '__all__'
